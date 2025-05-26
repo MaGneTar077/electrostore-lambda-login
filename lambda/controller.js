@@ -1,5 +1,5 @@
 const { loginService } = require("./service");
-const { response } = require("./utils/response");
+const { response } = require("./response");
 
 exports.loginController = async (event) => {
     try {

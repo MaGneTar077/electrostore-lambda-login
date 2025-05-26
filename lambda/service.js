@@ -1,6 +1,5 @@
-const bcrypt = require("bcryptjs");
 const { findUserByEmail } = require("./repository");
-const { generateToken } = require("./utils/jwt");
+const { generateToken } = require("./jwt");
 
 exports.loginService = async ({ email, password }) => {
     if (!email || !password) {
@@ -11,7 +10,8 @@ exports.loginService = async ({ email, password }) => {
 
     const user = await findUserByEmail(email);
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    // Validación en texto plano (sin bcrypt)
+    if (!user || password !== user.password) {
         const err = new Error("Credenciales inválidas");
         err.statusCode = 401;
         throw err;
